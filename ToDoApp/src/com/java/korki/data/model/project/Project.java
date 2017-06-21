@@ -15,27 +15,34 @@ public abstract class Project implements GroupProject {
 	private long id;
 	private String name;
 	private String password;
+	private Type type;
 
 	private Date startDate;
 	private Date endDate;
 
 	private HashMap<Task, ArrayList<User>> taskUserMap;
 
-	public Project(String name, String password, Date startDate, Date endDate) {
-		id = idCounter++;
-		this.name = name;
-		this.password = password;
-		this.taskUserMap = new HashMap<Task, ArrayList<User>>();
-		this.startDate = startDate;
-		this.endDate = endDate;
+	
+	
+	public Project(String name, String password) {
+		this(name, password, Type.D, null, null);
+	}
+	
+	public Project(String name, String password, Type type) {
+		this(name, password, type, null, null);
+	}
+	
+	public Project(String name, String password, Type type, Date startDate) {
+		this(name, password, type, startDate, null);
 	}
 
-	public Project(String name, String password, Date endDate) {
+	public Project(String name, String password, Type type, Date startDate, Date endDate) {
 		id = idCounter++;
 		this.name = name;
 		this.password = password;
+		this.type = type;
 		this.taskUserMap = new HashMap<Task, ArrayList<User>>();
-		this.startDate = new Date();
+		this.startDate = startDate;
 		this.endDate = endDate;
 	}
 
@@ -85,6 +92,14 @@ public abstract class Project implements GroupProject {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
 	}
 
 	@Override
@@ -152,5 +167,4 @@ public abstract class Project implements GroupProject {
 		}
 		throw new Exception("User not found");
 	}
-
 }
