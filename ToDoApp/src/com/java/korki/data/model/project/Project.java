@@ -21,7 +21,7 @@ public abstract class Project implements GroupProject {
 	
 	private ProjectHolder holder;
 
-	private HashMap<Task, ArrayList<User>> taskUserMap;
+	private HashMap<User, ArrayList<Task>> userTaskMap;
 
 	
 	
@@ -43,7 +43,7 @@ public abstract class Project implements GroupProject {
 		this.name = name;
 		this.password = password;
 		this.type = type;
-		this.taskUserMap = new HashMap<Task, ArrayList<User>>();
+		this.userTaskMap = new HashMap<User, ArrayList<Task>>();
 		this.startDate = startDate;
 		this.endDate = endDate;
 	}
@@ -68,12 +68,12 @@ public abstract class Project implements GroupProject {
 		this.password = password;
 	}
 
-	public HashMap<Task, ArrayList<User>> getTaskUserMap() {
-		return taskUserMap;
+	public HashMap<User, ArrayList<Task>> getUserTaskMap() {
+		return userTaskMap;
 	}
 
-	public void setTaskUserMap(HashMap<Task, ArrayList<User>> taskUserMap) {
-		this.taskUserMap = taskUserMap;
+	public void setUserTaskMap(HashMap<User, ArrayList<Task>> userTaskMap) {
+		this.userTaskMap = userTaskMap;
 	}
 
 	public Date getStartDate() {
@@ -132,7 +132,7 @@ public abstract class Project implements GroupProject {
 		builder.append(", password=");
 		builder.append(password);
 		builder.append(", taskUserMap=");
-		builder.append(taskUserMap);
+		builder.append(userTaskMap);
 		builder.append(", startDate=");
 		builder.append(startDate);
 		builder.append(", endDate=");
@@ -142,14 +142,10 @@ public abstract class Project implements GroupProject {
 	}
 
 	public ArrayList<User> getMembers() {
-		HashMap<Task, ArrayList<User>> map = this.getTaskUserMap();
-		HashSet<User> set = new HashSet<>();
-		for (ArrayList<User> users : map.values()) {
-			set.addAll(users);
-		}
+		HashMap<User, ArrayList<Task>> map = this.getUserTaskMap();
 		ArrayList<User> listOfMembers = new ArrayList<>();
-
-		for (User user : set) {
+		
+		for (User user : map.keySet() ){
 			listOfMembers.add(user);
 		}
 
