@@ -5,13 +5,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
+import com.java.korki.data.holder.ProjectHolder;
 import com.java.korki.data.model.project.task.Task;
 import com.java.korki.data.model.user.User;
 import com.java.korki.interfaces.GroupProject;
 
 public abstract class Project implements GroupProject {
-	public static long idCounter = 0;
-
 	private long id;
 	private String name;
 	private String password;
@@ -19,6 +18,8 @@ public abstract class Project implements GroupProject {
 
 	private Date startDate;
 	private Date endDate;
+	
+	private ProjectHolder holder;
 
 	private HashMap<Task, ArrayList<User>> taskUserMap;
 
@@ -37,7 +38,8 @@ public abstract class Project implements GroupProject {
 	}
 
 	public Project(String name, String password, Type type, Date startDate, Date endDate) {
-		id = idCounter++;
+		holder = holder.getInstance();
+		id = holder.getIdHelper().getIdCounter();
 		this.name = name;
 		this.password = password;
 		this.type = type;
@@ -48,10 +50,6 @@ public abstract class Project implements GroupProject {
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getName() {

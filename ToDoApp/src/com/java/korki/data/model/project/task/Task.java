@@ -1,15 +1,17 @@
 package com.java.korki.data.model.project.task;
 
-public class Task {
-	public static long idCounter = 0;
+import com.java.korki.data.holder.TaskHolder;
 
+public class Task {
 	private long id;
 	private String description;
 	private Priority priority;
 	private boolean done;
+	private TaskHolder holder;
 
 	public Task(String description, Priority priority, boolean done) {
-		id = idCounter++;
+		holder = holder.getInstance();
+		id = holder.getIdHelper().getIdCounter();
 		this.description = description;
 		this.priority = priority;
 		this.done = done;

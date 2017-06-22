@@ -1,14 +1,17 @@
 package com.java.korki.data.model.user;
 
-public class User {
-	public static long idCounter = 0;
+import com.java.korki.data.holder.UserHolder;
 
+public class User {
 	private long id;
 	private String username;
 	private String password;
 
+	private UserHolder holder;
+	
 	public User(String username, String password) {
-		this.id = idCounter++;
+		holder = holder.getInstance();
+		this.id = holder.getIdHelper().getIdCounter();
 		this.username = username;
 		this.password = password;
 	}
